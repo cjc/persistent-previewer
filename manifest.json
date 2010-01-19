@@ -15,7 +15,7 @@
  
 	"content_scripts": [
 		{
-			"matches": ["http://testing.bigpondmusic.mammothmedia.com.au/*"],
+			"matches": ["http://bigpondmusic.com/*"],
 			"js":      ["jquery.js","content.js"]
 		}
 	], 
@@ -24,7 +24,7 @@
  
 	"permissions": [
 		"http://admin.dams.bigpond.com/",
-		"http://testing.bigpondmusic.mammothmedia.com.au/",
+		"http://bigpondmusic.com/",
 		"tabs"
 	]
 }

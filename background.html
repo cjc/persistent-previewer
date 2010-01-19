@@ -17,7 +17,7 @@
 					chrome.pageAction.setTitle({tabId:sendertab,title:'Downloading preview'});
 					chrome.pageAction.show(sendertab);
 					var xhr = new XMLHttpRequest();
-					var url = "http://testing.bigpondmusic.mammothmedia.com.au/Preview/Track/" + id;
+					var url = "http://bigpondmusic.com/Preview/Track/" + id;
 					//console.log("fetching " + url);
 					xhr.open("GET", url, true);
 					xhr.send();
