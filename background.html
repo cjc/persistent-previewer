@@ -1,0 +1,53 @@
+<html>
+	<head>
+	<script type="text/javascript">
+		var a = null;
+		var sendertab = null;
+		
+		var q = [];
+		
+		function PlayNext(){
+			if (a == null) {
+				if (q.length > 0) {
+					a = new Audio();
+					var id = q.shift();
+					var xhr = new XMLHttpRequest();
+					var url = "http://testing.bigpondmusic.mammothmedia.com.au/Preview/Track/" + id;
+					//console.log("fetching " + url);
+					xhr.open("GET", url, true);
+					xhr.send();
+					xhr.onreadystatechange = function() {
+						if (xhr.readyState == 4) {
+							// JSON.parse does not evaluate the attacker's scripts.
+							var resp = JSON.parse(xhr.responseText);
+							console.log(resp.mp3);
+							a.src = resp.mp3;
+							a.addEventListener('ended', function() {
+								a = null;
+								PlayNext();
+							});
+							chrome.pageAction.show(sendertab);
+							a.play();
+						}
+					}
+				} else {
+					chrome.pageAction.hide(sendertab);
+				}
+			}
+		}
+	
+		chrome.extension.onRequest.addListener(function(message, sender, sendResponse){
+			console.log("Message received");
+			console.log(message);
+			q.push(message.values);
+			sendertab = sender.tab.id;
+			PlayNext();
+		});
+	</script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			console.log("Starting");
+		</script>
+	</body>
+</html>

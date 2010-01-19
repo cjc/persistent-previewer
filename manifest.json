@@ -1,0 +1,30 @@
+{
+	"name":        "Persistent Previewer",
+	"version":     "1.0",
+	"description": "Persists audio previews through page transitions",
+
+	"icons": {
+		"128": "icon.png"
+	},
+
+	"page_action": {
+		"default_title": "Previews playing",
+		"default_icon": "icons/note.png",
+		"popup":        "popup.html" // if you disable this, the background page's onClick will work.
+	},
+ 
+	"content_scripts": [
+		{
+			"matches": ["http://testing.bigpondmusic.mammothmedia.com.au/*"],
+			"js":      ["jquery.js","content.js"]
+		}
+	], 
+ 
+	"background_page": "background.html",
+ 
+	"permissions": [
+		"http://admin.dams.bigpond.com/",
+		"http://testing.bigpondmusic.mammothmedia.com.au/",
+		"tabs"
+	]
+}
