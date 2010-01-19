@@ -1,0 +1,36 @@
+<html>
+<head>
+<style>
+
+</style>
+<script>
+
+function main() {
+	chrome.tabs.getSelected(null, function(tab) {
+		var nowplaying = chrome.extension.getBackgroundPage().nowplaying;
+		var q = chrome.extension.getBackgroundPage().q;
+		var queuelist = document.getElementById('queuelist');
+		var heading = document.getElementById('heading');
+		if (nowplaying == null) {
+			heading.innerText = "Nothing playing"
+		} else {
+			heading.innerText = "Now playing - " + nowplaying + nowplaying;
+		}
+		for(var i=0; i < q.length; i++) {
+			var item = document.createElement("LI");
+			item.innerText = q[i] + q[i];
+			queuelist.appendChild(item);
+		}
+		//content.appendChild(document.createElement('br'));
+	});
+}
+
+</script>
+</head>
+<body onload="javascript:main()">
+	<div id="content">
+	<h4 id="heading" class="heading">Loading...</h4>
+		
+	</div>
+</body>
+</html>

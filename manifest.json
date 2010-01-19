@@ -10,7 +10,7 @@
 	"page_action": {
 		"default_title": "Previews playing",
 		"default_icon": "icons/note.png",
-		"popup":        "popup.html" // if you disable this, the background page's onClick will work.
+		"popup":        "popup.htm"
 	},
  
 	"content_scripts": [

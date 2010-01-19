@@ -5,7 +5,7 @@ document.body.appendChild(tunnel);
 
 tunnel.addEventListener('PreviewTunnelEvent', function() {
 	var eventData = tunnel.innerText;
-	//alert("contnt script has data " + eventData);
+	//alert("content script has data " + eventData);
 	chrome.extension.sendRequest({message: "Preview", values: eventData});
 });
 

@@ -3,6 +3,7 @@
 	<script type="text/javascript">
 		var a = null;
 		var sendertab = null;
+		var nowplaying = null;
 		
 		var q = [];
 		
@@ -11,6 +12,10 @@
 				if (q.length > 0) {
 					a = new Audio();
 					var id = q.shift();
+					nowplaying = id;
+					chrome.pageAction.setIcon({tabId:sendertab,path:chrome.extension.getURL("icons/download.png")});
+					chrome.pageAction.setTitle({tabId:sendertab,title:'Downloading preview'});
+					chrome.pageAction.show(sendertab);
 					var xhr = new XMLHttpRequest();
 					var url = "http://testing.bigpondmusic.mammothmedia.com.au/Preview/Track/" + id;
 					//console.log("fetching " + url);
@@ -21,13 +26,18 @@
 							// JSON.parse does not evaluate the attacker's scripts.
 							var resp = JSON.parse(xhr.responseText);
 							console.log(resp.mp3);
-							a.src = resp.mp3;
 							a.addEventListener('ended', function() {
 								a = null;
+								nowplaying = null;
 								PlayNext();
 							});
-							chrome.pageAction.show(sendertab);
-							a.play();
+							a.addEventListener('canplaythrough', function() {
+								chrome.pageAction.setIcon({tabId:sendertab,path:chrome.extension.getURL("icons/note.png")});
+								chrome.pageAction.setTitle({tabId:sendertab,title:'Playing preview'});
+								a.play();
+							});
+							a.src = resp.mp3;
+							a.load();
 						}
 					}
 				} else {
@@ -37,7 +47,7 @@
 		}
 	
 		chrome.extension.onRequest.addListener(function(message, sender, sendResponse){
-			console.log("Message received");
+			//console.log("Message received");
 			console.log(message);
 			q.push(message.values);
 			sendertab = sender.tab.id;
